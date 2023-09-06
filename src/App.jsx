@@ -7,12 +7,10 @@ function App() {
   const [s, setS] = useState("");
 
   const handleValueNK = (e) => {
-    if (e.target.value.length >= 3) {
-      let [num1, num2] = e.target.value.split(" ");
-      if (0 < num1 < Math.pow(10, 5)) {
-        setN(num1);
-        setK(num2);
-      }
+    let [num1, num2] = e.target.value.split(" ");
+    if (0 < num1 < Math.pow(10, 5)) {
+      setN(num1);
+      setK(num2);
     }
   };
 
@@ -26,21 +24,22 @@ function App() {
 
   const FunctionHighestValuePalindrome = (s) => {
     let count = 0;
-    let notSame = [];
-    while (
-      Number.isInteger(n / 2) ? count < n / 2 : count < Math.round(n / 2) + 1
-    ) {
-      if (s[count] == s[s.length - (count + 1)]) {
+    let array = s.split('')
+    let reverseArray = s.split('').reverse()
+    let copiArray = array.map((el)=>el)
+    for (let i = 0; i < Math.round(array.length/2); i++) {
+      if (array[i] == reverseArray[i]) {
+        console.log('sin cambios');
       } else {
-        notSame.push(s.length - (count + 1));
+        copiArray[i] =  reverseArray[i]
+        count ++
       }
-      count++;
-    }
-    if(notSame.length == k){
-      // s[notSame[x]] == s[s.length - (count + 1)]
-    }
-    if(notSame.length <= k){
-
+      if(count <= k){
+        setS(copiArray)
+      }else{
+        setS(-1)
+        return
+      }
     }
   };
 
@@ -52,7 +51,6 @@ function App() {
           <input
             className="valueNKInput"
             placeholder="Ingresa N K"
-            maxLength={3}
             onChange={(e) => {
               handleValueNK(e);
             }}
@@ -72,7 +70,7 @@ function App() {
             <label className="label">n = {n}</label>
             <label className="label"> k = {k}</label>
           </div>
-          <label className="label">s ={s}</label>
+          <label className="label">s = {s}</label>
         </div>
       </div>
     </div>
